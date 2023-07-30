@@ -13,3 +13,6 @@
 # inventory button brings menu up to display items in inventory.
 # status displays user health and inventory space (3/10).
 
+user_health = 10
+inventory = []
+
