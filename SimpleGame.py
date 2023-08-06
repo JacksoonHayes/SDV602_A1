@@ -5,6 +5,8 @@ import PySimpleGUI as sg
 import time
 import cmd_parser.token as token
 import cmd_parser.command_manager as cm
+import inventory.inv as inventory
+import status.health as health
 
 
 def make_a_window():
@@ -49,14 +51,13 @@ if __name__ == "__main__":
                                    ['Image'], size=(175, 175))
 
             pass
-        elif event == 'Inventory';
-        
-        
-        
-        
-        
-        
-        
+        elif event == 'Inventory':
+            window['-OUTPUT-'].update(inventory.show_inventory())
+            
+            
+            
+        elif event == 'Status':
+            status.show_status()
         elif event == 'Exit' or event is None or event == sg.WIN_CLOSED:
             break
         else:

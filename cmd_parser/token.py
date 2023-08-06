@@ -3,9 +3,7 @@ from enum import Enum
 
 Take string containing a proposed command produce a list of tokens
 """
-_vocab_tokens = set(['north', 'south', 'east', 'west', 'monster', 'fight', 'pick', 'up',
-                    'open', 'close', 'run', 'duck', 'hide', 'go', 'swing', 'number', 'operator', 'name'])
-_operators = set(['+', '-', 'x', '/', '(', ')'])
+_vocab_tokens = set(['north', 'south', 'east', 'west'])
 
 # _white_space = set('\t', '\r', '\n', ' ')
 
@@ -21,7 +19,7 @@ def valid_list(p_input_string):
     """
     result = []
     for astring in p_input_string.split():
-        if astring.lower() in _vocab_tokens or astring in _operators:
+        if astring.lower() in _vocab_tokens:
             result.append(astring)
 
     return result
