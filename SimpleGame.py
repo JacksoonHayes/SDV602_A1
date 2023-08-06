@@ -51,15 +51,16 @@ if __name__ == "__main__":
                                    ['Image'], size=(175, 175))
 
             pass
+        
         elif event == 'Inventory':
             window['-OUTPUT-'].update(inventory.show_inventory())
             
-            
-            
         elif event == 'Status':
-            status.show_status()
+            window['-OUTPUT-'].update(health.show_status())
+            
         elif event == 'Exit' or event is None or event == sg.WIN_CLOSED:
             break
+        
         else:
             pass
 
