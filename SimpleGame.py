@@ -19,13 +19,20 @@ def make_a_window():
 
     sg.theme('Dark Brown 6')  # please make your windows
     prompt_input = [sg.Text('Enter your command', font='Any 14'), sg.Input(
-        key='-IN-', size=(40, 1), font='Any 14')]
+        key='-IN-', size=(20, 1), font='Any 14', pad=(0, 10))]
     buttons = [sg.Button('Inventory'), sg.Button('Enter',  bind_return_key=True), sg.Button('Exit')]
-    command_col = sg.Column([prompt_input, buttons], element_justification='r')
-    layout = [[sg.Image(r'images/town.png', size=(175, 175), key="-IMG-"), sg.Text(cm.show_current_place(), size=(100, 10), font='Any 12', key='-OUTPUT-')],
-              [command_col]]
+    image = [sg.Image(r'images/town.png', size=(175, 175), key="-IMG-", pad=(0, 10))]
 
-    return sg.Window('Adventure Game', layout, size=(600, 275))
+    column1 = sg.Column([image, prompt_input, buttons], element_justification='c')
+
+    # Define column 2
+    output = [sg.Text(cm.show_current_place(), size=(100, 10), font='Any 12', key='-OUTPUT-')]
+    column2 = sg.Column([output], element_justification='l')
+
+    # Define layout with a vertical separator
+    layout = [[column1, sg.VerticalSeparator(), column2]]
+
+    return sg.Window('Adventure Game', layout, size=(700, 300))
 
 
 if __name__ == "__main__":
