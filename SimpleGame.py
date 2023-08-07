@@ -6,7 +6,7 @@ import time
 import cmd_parser.token as token
 import cmd_parser.command_manager as cm
 import inventory.inv as inventory
-import status.status as status
+import status.health as health
 
 
 def make_a_window():
@@ -19,20 +19,13 @@ def make_a_window():
 
     sg.theme('Dark Brown 6')  # please make your windows
     prompt_input = [sg.Text('Enter your command', font='Any 14'), sg.Input(
-        key='-IN-', size=(20, 1), font='Any 14', pad=(0, 10))]
+        key='-IN-', size=(40, 1), font='Any 14')]
     buttons = [sg.Button('Inventory'), sg.Button('Enter',  bind_return_key=True), sg.Button('Exit')]
-    image = [sg.Image(r'images/town.png', size=(175, 175), key="-IMG-", pad=(0, 10))]
+    command_col = sg.Column([prompt_input, buttons], element_justification='r')
+    layout = [[sg.Image(r'images/town.png', size=(175, 175), key="-IMG-"), sg.Text(cm.show_current_place(), size=(100, 10), font='Any 12', key='-OUTPUT-')],
+              [command_col]]
 
-    column1 = sg.Column([image, prompt_input, buttons], element_justification='c')
-
-    # Define column 2
-    output = [sg.Text(cm.show_current_place(), size=(100, 10), font='Any 12', key='-OUTPUT-')]
-    column2 = sg.Column([output], element_justification='l')
-
-    # Define layout with a vertical separator
-    layout = [[column1, sg.VerticalSeparator(), column2]]
-
-    return sg.Window('Adventure Game', layout, size=(700, 300))
+    return sg.Window('Adventure Game', layout, size=(600, 275))
 
 
 if __name__ == "__main__":
@@ -48,9 +41,10 @@ if __name__ == "__main__":
         event, values = window.read()
         print(event)
         
-        if status.player_health <= 0:
+        if health.player_health <= 5:
             # window['-IMG-'].update(r'images/dead.png', size=(175, 175))
-            window['-OUTPUT-'].update('Your health has reached 0 and you have died.'),
+            window['-OUTPUT-'].update('Your health has reached 0 \n\n You have died.'),
+            time.sleep(5)
             break
         
         elif event == 'Enter':
@@ -59,16 +53,18 @@ if __name__ == "__main__":
             for atoken in list_of_tokens:
                 current_story = cm.game_play(atoken)
                 window['-OUTPUT-'].update(current_story)
-
+                
             window['-IMG-'].update(r'images/'+cm.game_places[cm.game_state]
                                    ['Image'], size=(175, 175))
             pass
         
         elif event == 'Inventory':
             window['-OUTPUT-'].update(inventory.show_inventory())
+            pass
             
         elif event == 'Exit' or event is None or event == sg.WIN_CLOSED:
-            break   
+            pass
+    
         else:
             pass
 

@@ -1,4 +1,5 @@
-
+import status.health as health
+# import inventory.inventory as inventory
 
 # Brief comment about how the following lines work
 game_state = 'Town'
@@ -26,8 +27,8 @@ def show_current_place():
         string: the story at the current place
     """
     global game_state
-
-    return game_places[game_state]['Story']
+    
+    return f"{health.show_health()}\n\n{game_places[game_state]['Story']}"
 
 
 def game_play(direction):
@@ -49,5 +50,6 @@ def game_play(direction):
             return 'You can not go that way.\n\n'+game_places[game_state]['Story']
         else:
             game_state = proposed_state
-            return game_places[game_state]['Story']
+            health.player_health -= 5
+            return f"{health.show_health()}\n\n{game_places[game_state]['Story']}"
 
