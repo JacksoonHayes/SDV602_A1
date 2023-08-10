@@ -41,13 +41,12 @@ if __name__ == "__main__":
         event, values = window.read()
         print(event)
         
-        if health.player_health <= 5:
-            # window['-IMG-'].update(r'images/dead.png', size=(175, 175))
-            window['-OUTPUT-'].update('Your health has reached 0 \n\n You have died.'),
+        if health.player_health <= 0:
+            window['-OUTPUT-'].update("You have died. Game Over.")
             time.sleep(5)
             break
         
-        elif event == 'Enter':
+        if event == 'Enter':
             list_of_tokens = token.valid_list(values['-IN-'].lower())
 
             for atoken in list_of_tokens:
@@ -56,6 +55,7 @@ if __name__ == "__main__":
                 
             window['-IMG-'].update(r'images/'+cm.game_places[cm.game_state]
                                    ['Image'], size=(175, 175))
+
             pass
         
         elif event == 'Inventory':
@@ -63,10 +63,10 @@ if __name__ == "__main__":
             pass
             
         elif event == 'Exit' or event is None or event == sg.WIN_CLOSED:
-            pass
-    
+            break
+
         else:
+            
             pass
-
-
+        
     window.close()

@@ -1,6 +1,5 @@
 import status.health as health
-# import inventory.inventory as inventory
-
+import time 
 # Brief comment about how the following lines work
 game_state = 'Town'
 game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\nTo the South is a Castle.\nTo the East is a Forest\nTo the West is a Lake.',
@@ -43,13 +42,15 @@ def game_play(direction):
     """
     global game_state
 
-    if direction.lower() in 'northeastsouthwest':  # is this a nasty check?
-        game_place = game_places[game_state]
-        proposed_state = game_place[direction.capitalize()]
-        if proposed_state == '':
-            return 'You can not go that way.\n\n'+game_places[game_state]['Story']
-        else:
-            game_state = proposed_state
-            health.player_health -= 5
-            return f"{health.show_health()}\n\n{game_places[game_state]['Story']}"
+    while health.player_health > 0:
+        
+        if direction.lower() in 'northeastsouthwest':  # is this a nasty check?
+            game_place = game_places[game_state]
+            proposed_state = game_place[direction.capitalize()]
+            if proposed_state == '':
+                return 'You can not go that way.\n\n'+game_places[game_state]['Story']
+            else:
+                game_state = proposed_state
+                health.player_health -= 5
+                return f"{health.show_health()}\n\n{game_places[game_state]['Story']}"
 

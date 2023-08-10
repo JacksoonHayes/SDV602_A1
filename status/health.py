@@ -1,6 +1,6 @@
 
 
-player_health = 100
+player_health = 10
 
 def show_health():
     return (f"Health: {player_health}")
