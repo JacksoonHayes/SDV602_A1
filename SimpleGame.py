@@ -2,7 +2,6 @@
 A comment describing the game module
 """
 import PySimpleGUI as sg
-import time
 import cmd_parser.token as token
 import cmd_parser.command_manager as cm
 import inventory.inv as inventory
@@ -44,7 +43,8 @@ if __name__ == "__main__":
         if health.player_health <= 0:
             window['-OUTPUT-'].update("Your health has reached 0 and you have died.\n\nGame Over.")
             pass
-        elif event == 'Enter':
+        
+        if event == 'Enter':
             list_of_tokens = token.valid_list(values['-IN-'].lower())
 
             for atoken in list_of_tokens:
