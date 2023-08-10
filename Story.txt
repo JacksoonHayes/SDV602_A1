@@ -1,3 +1,7 @@
+-- GAME -- 
+> game starts in town and progression works clockwise around the map.
+> each location requiring an item from the previous location to keep progressing. 
+
 -- STATUS --
 > user has 10 health
 > user health reset to 10 after each fight
