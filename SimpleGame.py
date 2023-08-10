@@ -42,11 +42,9 @@ if __name__ == "__main__":
         print(event)
         
         if health.player_health <= 0:
-            window['-OUTPUT-'].update("You have died. Game Over.")
-            time.sleep(5)
-            break
-        
-        if event == 'Enter':
+            window['-OUTPUT-'].update("Your health has reached 0 and you have died.\n\nGame Over.")
+            pass
+        elif event == 'Enter':
             list_of_tokens = token.valid_list(values['-IN-'].lower())
 
             for atoken in list_of_tokens:
