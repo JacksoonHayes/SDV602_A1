@@ -1,21 +1,22 @@
 import status.health as health
 import time 
+import inventory.inv as inventory
 # Brief comment about how the following lines work
 game_state = 'Town'
 game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\nTo the South is a Castle.\nTo the East is a Forest\nTo the West is a Lake.',
                           'North': 'Cave', 'South': 'Castle', 'East': 'Forest', 'West': 'Lake', 'Image': 'town.png'},
                
-               'Cave': {'Story': 'You are at the Cave.\n\nTo the South is Forest.\nTo the East is a Town.\nTo the West is a Lake.',
-                        'North': '', 'South': 'Town','East': 'Forest', 'West': 'Lake', 'Image': 'cave.png'},
+               'Cave': {'Story': 'You are at the Cave.\n\nTo the South is Forest.\n\nDo you wish to enter the Cave?',
+                        'North': '', 'South': 'Town','Enter': 'Cave_inside', 'Image': 'cave.png'},
                
-               'Castle': {'Story': 'You are at the Castle.\n\nTo the North is forest.\nTo the East is a Town.\nTo the West is a Lake.',
-                          'North': 'Town', 'South': '','East': 'Forest', 'West': 'Lake', 'Image': 'castle.png'},
+               'Castle': {'Story': 'You are at the Castle.\n\nTo the North is a Town.\n\nDo you wish to enter the Castle?',
+                          'North': 'Town', 'South': '','Enter': 'Castle_inside', 'Image': 'castle.png'},
                
-               'Forest': {'Story': 'You enter a Forest.\n\nTo the North is a Cave.\nTo the West is a Town.\nTo the South is a Castle.',
-                          'North': 'Cave', 'South': 'Castle', 'East': '', 'West': 'Town',  'Image': 'forest.png'},
+               'Forest': {'Story': 'You enter a Forest.\n\nTo the West is a Town.',
+                          'East': '', 'West': 'Town', 'Image': 'forest.png'},
                
-               'Lake': {'Story': 'You arrive at a Lake.\n\nTo the North is a Cave.\nTo the East is a Forest.\nTo the South is a Castle.',
-                          'North': 'Cave', 'South': 'Castle', 'East': 'Town', 'West': '',  'Image': 'lake.png'},
+               'Lake': {'Story': 'You arrive at a Lake.\n\nTo the East is a Town.',
+                          'East': 'Town', 'West': '',  'Image': 'lake.png'},
                }
 
 
@@ -27,7 +28,7 @@ def show_current_place():
     """
     global game_state
     
-    return f"{health.show_health()}\n\n{game_places[game_state]['Story']}"
+    return f"{health.show_health()}       {inventory.inv_count()}\n\n{game_places[game_state]['Story']}"
 
 
 def game_play(direction):
