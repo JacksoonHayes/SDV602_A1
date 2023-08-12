@@ -21,7 +21,7 @@ def make_a_window():
         key='-IN-', size=(40, 1), font='Any 14')]
     buttons = [sg.Button('Inventory'), sg.Button('Enter',  bind_return_key=True), sg.Button('Exit')]
     command_col = sg.Column([prompt_input, buttons], element_justification='r')
-    layout = [[sg.Image(r'images/town.png', size=(175, 175), key="-IMG-"), sg.Text(cm.show_current_place(), size=(100, 10), font='Any 12', key='-OUTPUT-')],
+    layout = [[sg.Image(r'images/town.png', size=(175, 175), key="-IMG-"), sg.Text(cm.current_place(), size=(100, 10), font='Any 12', key='-OUTPUT-')],
               [command_col]]
 
     return sg.Window('Adventure Game', layout, size=(600, 275))
