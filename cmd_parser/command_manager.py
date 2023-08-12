@@ -1,22 +1,23 @@
 import status.health as health
 import time 
 import inventory.inv as inventory
+
 # Brief comment about how the following lines work
 game_state = 'Town'
 game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\nTo the South is a Castle.\nTo the East is a Forest\nTo the West is a Lake.',
                           'North': 'Cave', 'South': 'Castle', 'East': 'Forest', 'West': 'Lake', 'Image': 'town.png'},
                
                'Cave': {'Story': 'You are at the Cave.\n\nTo the South is Forest.\n\nDo you wish to enter the Cave?',
-                        'North': '', 'South': 'Town','Enter': 'Cave_inside', 'Image': 'cave.png'},
+                        'North': '', 'East': '', 'South': 'Town', 'West': '', 'Enter': 'Cave_inside', 'Image': 'cave.png'},
                
                'Castle': {'Story': 'You are at the Castle.\n\nTo the North is a Town.\n\nDo you wish to enter the Castle?',
-                          'North': 'Town', 'South': '','Enter': 'Castle_inside', 'Image': 'castle.png'},
+                          'North': 'Town', 'East': '', 'South': '', 'West': '', 'Enter': 'Castle_inside', 'Image': 'castle.png'},
                
                'Forest': {'Story': 'You enter a Forest.\n\nTo the West is a Town.',
-                          'East': '', 'West': 'Town', 'Image': 'forest.png'},
+                          'North': '', 'East': '', 'South': '', 'West': 'Town', 'Image': 'forest.png'},
                
                'Lake': {'Story': 'You arrive at a Lake.\n\nTo the East is a Town.',
-                          'East': 'Town', 'West': '',  'Image': 'lake.png'},
+                          'North': '', 'East': 'Town', 'South': '', 'West': '',  'Image': 'lake.png'},
                }
 
 
@@ -53,5 +54,5 @@ def game_play(direction):
             else:
                 game_state = proposed_state
                 health.player_health -= 5
-                return f"{health.show_health()}\n\n{game_places[game_state]['Story']}"
+                return f"{health.show_health()}       {inventory.inv_count()}\n\n{game_places[game_state]['Story']}"
 
