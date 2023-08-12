@@ -53,13 +53,12 @@ if __name__ == "__main__":
             pass
         
         elif event == 'Inventory':
-            window['-OUTPUT-'].update(inventory.show_inventory())
+            if window['-OUTPUT-'].get() == inventory.show_inventory():
+                window['-OUTPUT-'].update(cm.current_place())
+            else:
+                window['-OUTPUT-'].update(inventory.show_inventory())
             pass
-                
-        elif event == 'Inventory' and window['-OUTPUT-'].get() == inventory.show_inventory():
-            window['-OUTPUT-'].update(cm.current_place())
-            pass
-            
+
         elif event == 'Exit' or event is None or event == sg.WIN_CLOSED:
             break
 
