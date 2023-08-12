@@ -46,11 +46,9 @@ if __name__ == "__main__":
             pass
         
         if event == 'Enter':
-            list_of_tokens = token.valid_list(values['-IN-'].lower())
+            current_story = cm.game_play(values['-IN-'].lower())
 
-            for atoken in list_of_tokens:
-                current_story = cm.game_play(atoken)
-                window['-OUTPUT-'].update(current_story)
+            window['-OUTPUT-'].update(current_story)
                 
             window['-IMG-'].update(r'images/'+cm.game_places[cm.game_state]
                                    ['Image'], size=(175, 175))
