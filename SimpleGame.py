@@ -47,16 +47,17 @@ if __name__ == "__main__":
         
         if event == 'Enter':
             current_story = cm.game_play(values['-IN-'].lower())
-
             window['-OUTPUT-'].update(current_story)
-                
             window['-IMG-'].update(r'images/'+cm.game_places[cm.game_state]
                                    ['Image'], size=(175, 175))
-
             pass
         
         elif event == 'Inventory':
             window['-OUTPUT-'].update(inventory.show_inventory())
+            pass
+                
+        elif event == 'Inventory' and window['-OUTPUT-'].get() == inventory.show_inventory():
+            window['-OUTPUT-'].update(cm.current_place())
             pass
             
         elif event == 'Exit' or event is None or event == sg.WIN_CLOSED:
