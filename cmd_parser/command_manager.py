@@ -35,16 +35,22 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                                 'Image': 'cave.png'
                             },
                
-               'Castle': {'Story': 'You are at the Castle.\n\nTo the North is a Town.\n\nDo you wish to enter the Castle?',
-                          'North': (move, 'Town'),
-                          'Enter': (move, 'Castle_inside'),
-                          'Image': 'castle.png'
-                        },
-               
                'Forest': {'Story': 'You enter a Forest.\n\nTo the West is a Town.',
                           'West': (move, 'Town'),
                           'Image': 'forest.png'
                           },
+
+               'Castle': {'Story': 'You are at the Castle.\n\nTo the North is a Town.\n\nDo you wish to enter the Castle?',
+                          'North': (move, 'Town'),
+                          'Enter': (move, 'InCastle'),
+                          'Image': 'castle.png'
+                        },
+               
+               'InCastle': {'Story': 'You are inside the Castle.\n\nDo you wish to leave the Castle?',
+                            'Leave': (move, 'Castle'),
+                            'Item': 'Shield',
+                            'Image': 'castle.png'
+                        },
                
                'Lake': {'Story': 'You arrive at a Lake.\n\nTo the East is a Town.',
                           'East': (move, 'Town'),

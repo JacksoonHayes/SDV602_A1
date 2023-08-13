@@ -1,5 +1,5 @@
 
-player_inventory = set(('Torch',))
+player_inventory = set[]
 
 def display_inventory(inventory):
     return "\n".join([f"{index}. {item}" for index, item in enumerate(sorted(inventory), 1)])
