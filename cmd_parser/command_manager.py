@@ -19,7 +19,6 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                           'East': (move, 'Forest'),
                           'South': (move, 'Castle'),
                           'West': (move, 'Lake'),
-                          'Item': 'Torch',
                           'Image': 'town.png'
                           },
                
@@ -29,10 +28,10 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                         'Image': 'cave.png'
                         },
                
-               'InCave': {'Story': 'You are inside the Cave.\n\nDo you wish to leave the Cave?',
+               'InCave': {'Story': 'You are inside the Cave.\n\nDo you wish to leave?',
                                 'Leave': (move, 'Cave'),
                                 'Item': 'Sword',
-                                'Image': 'cave.png'
+                                'Image': 'dead.png'
                             },
                
                'Forest': {'Story': 'You enter a Forest.\n\nTo the West is a Town.',
@@ -57,6 +56,14 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                           'Image': 'lake.png'
                           },
                }
+
+
+def item_check():
+     if 'Item' in game_places[game_state]:
+        item = game_places[game_state]['Item']
+        if item and item not in inventory.player_inventory:
+            inventory.collect_item(item)
+
 
 
 def current_place():
@@ -89,20 +96,17 @@ def game_play(user_input):
             story_result = f"PLEASE ENTER A VALID COMMAND\n\n{game_places[game_state]['Story']}"
             
         else:
-            if 'Item' in game_places[game_state]:
-                item = game_places[game_state]['Item']
-                if item and item not in inventory.player_inventory:
-                    inventory.collect_item(item)
-                    print(inventory.player_inventory)
-                    story_result = f"You have found a {item}.\n\n{game_places[game_state]['Story']}"
-                    
             for atoken in valid_tokens:
                 game_place = game_places[game_state]
                 the_place = atoken.capitalize()
-                if the_place in game_place:
+                if item_check():
+                    item = game_places[game_state]['Item']
+                    story_result = f"You found a {item}!\n\n{game_places[game_state]['Story']}"
+                elif the_place in game_place:
+                    health.decrease_health(5)
                     place = game_place[the_place]
-                    story_result = place[0](place)  # Run the action
+                    story_result = place[0](place)
                 else:
-                    story_result = f"You can not go {atoken} from here\n\n{game_places[game_state]['Story']}"
+                    story_result = f"You can not go {atoken} from here\n\n{game_places[game_state]['Story']}"            
                     
         return story_result
