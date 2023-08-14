@@ -18,8 +18,10 @@ def decrease_health(amount):
     global player_health
     player_health -= amount
     
-def use_potion():
+def use_potion(game_place):
     if 'Potion' in inventory.player_inventory:
         inventory.player_inventory.remove('Potion')
         increase_health(30)
-        return (f"You used a potion to increase your health by 20\n\n{cm.game_places[cm.game_state]['Story']}")
+        return (f"You used a potion to increase your health by 30\n\n{cm.current_place()}")
+    else:
+        return (f"You have no potions to use\n\n{cm.current_place()}")

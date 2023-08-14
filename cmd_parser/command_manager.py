@@ -3,7 +3,6 @@ import inventory.inv as inventory
 import cmd_parser.token as token
 
 
-
 def move(game_place):
     global game_state
     
@@ -44,7 +43,6 @@ def talk_to_knight(game_place):
         inventory.collect_item('Potion')
         game_places[game_state]['Story'] = 'You are inside the castle\n\nDo you wish to leave?'
         return f"The knight speaks of a bounty at the nearby lake,\nyou recieve a shield and potion.\n\n{current_place()}"
-    
 
 
 # Brief comment about how the following lines work
@@ -54,13 +52,15 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                           'East': (move, 'Forest'),
                           'South': (move, 'Castle'),
                           'West': (move, 'Lake'),
-                          'Image': 'town.png'
+                          'Image': 'town.png',
+                          'Potion': (health.use_potion, 'Town')
                           },
                
                'Cave': {'Story': 'You are at a Cave.\n\nTo the South is a Town.\n\nDo you wish to enter the Cave?',
                         'South': (move, 'Town'),
                         'Enter': (enter_cave, 'InCave'),
-                        'Image': 'cave.png'
+                        'Image': 'cave.png',
+                        'Potion': (health.use_potion, 'Cave')
                         },
                
                'InCave': {'Story': 'The cave is dimly lit, but it may be worth searching\n\nDo you wish to leave?',
