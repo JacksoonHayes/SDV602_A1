@@ -7,10 +7,19 @@ import cmd_parser.token as token
 def move(game_place):
     
     global game_state
-
+    
     game_state = game_place[1]
-
+    
     return current_place()
+
+def enter_cave(game_place):
+    result = ''
+    if inventory.has_item('Torch'):
+        result = move(game_place)
+    else:
+        result = "You don't have a torch to enter the cave."
+    return result
+
 
 # Brief comment about how the following lines work
 game_state = 'Town'
@@ -58,13 +67,6 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                }
 
 
-def item_check():
-     if 'Item' in game_places[game_state]:
-        item = game_places[game_state]['Item']
-        if item and item not in inventory.player_inventory:
-            inventory.collect_item(item)
-
-
 
 def current_place():
     """Gets the story at the game_state place
@@ -99,9 +101,10 @@ def game_play(user_input):
             for atoken in valid_tokens:
                 game_place = game_places[game_state]
                 the_place = atoken.capitalize()
-                if item_check():
-                    item = game_places[game_state]['Item']
-                    story_result = f"You found a {item}!\n\n{game_places[game_state]['Story']}"
+                
+                if cave_item() == True:
+                    story_result = f"You found a Sword\n\n{game_places[game_state]['Story']}"
+                    
                 elif the_place in game_place:
                     health.decrease_health(5)
                     place = game_place[the_place]

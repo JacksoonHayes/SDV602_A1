@@ -43,9 +43,10 @@ if __name__ == "__main__":
         if health.player_health <= 0:
             window['-OUTPUT-'].update("Your health has reached 0 and you have died.\n\nGame Over.")
             window['-IN-'].update(disabled=True)
-            window['-IMG-'].update(r'images/dead.png')
+            window['-IMG-'].update(r'images/dead.png' , size=(175, 175))
+            pass
         
-        if event == 'Enter':
+        elif event == 'Enter':
             current_story = cm.game_play(values['-IN-'].lower())
             window['-OUTPUT-'].update(current_story)
             window['-IMG-'].update(r'images/'+cm.game_places[cm.game_state]

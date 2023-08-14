@@ -16,3 +16,5 @@ def inv_count():
 def show_inventory():
     return (f"Inventory: \n\n{display_inventory(player_inventory)}")
     
+def has_item(item):
+    return item in player_inventory
