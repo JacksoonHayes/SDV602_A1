@@ -4,6 +4,9 @@ import cmd_parser.command_manager as cm
 
 player_health = 100
 
+def status():
+    return f"{show_health()}       {inventory.inv_count()}"
+
 def show_health():
     return (f"Health: {player_health}")
 

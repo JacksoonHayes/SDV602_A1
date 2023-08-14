@@ -20,7 +20,7 @@ def make_a_window():
         key='-IN-', size=(40, 1), font='Any 14')]
     buttons = [sg.Button('Inventory'), sg.Button('Enter',  bind_return_key=True), sg.Button('Exit')]
     command_col = sg.Column([prompt_input, buttons], element_justification='r')
-    layout = [[sg.Image(r'images/town.png', size=(175, 175), key="-IMG-"), sg.Text(cm.current_place(), size=(100, 10), font='Any 12', key='-OUTPUT-')],
+    layout = [[sg.Image(r'images/town.png', size=(175, 175), key="-IMG-"), sg.Text(cm.current_status(), size=(100, 10), font='Any 12', key='-OUTPUT-')],
               [command_col]]
 
     return sg.Window('Adventure Game', layout, size=(600, 275))
@@ -42,9 +42,10 @@ if __name__ == "__main__":
         if health.player_health <= 0:
             window['-OUTPUT-'].update("Your health has reached 0 and you have died.\n\nGame Over.")
             window['-IN-'].update(disabled=True)
-            window['-IMG-'].update(r'images/dead.png')
+            window['-IMG-'].update(r'images/dead.png' , size=(175, 175))
+            pass
         
-        if event == 'Enter':
+        elif event == 'Enter':
             current_story = cm.game_play(values['-IN-'].lower())
             window['-OUTPUT-'].update(current_story)
             window['-IMG-'].update(r'images/'+cm.game_places[cm.game_state]
@@ -53,7 +54,7 @@ if __name__ == "__main__":
         
         elif event == 'Inventory':
             if window['-OUTPUT-'].get() == inventory.show_inventory():
-                window['-OUTPUT-'].update(cm.current_place())
+                window['-OUTPUT-'].update(cm.current_status())
             else:
                 window['-OUTPUT-'].update(inventory.show_inventory())
             pass
