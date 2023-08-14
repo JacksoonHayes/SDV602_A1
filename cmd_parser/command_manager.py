@@ -16,16 +16,16 @@ def enter_cave(game_place):
     if inventory.has_item('Torch'):
         result = move(game_place)
     else:
-        result = f"You need a torch to enter the cave.\n\n{game_places[game_state]['Story']}"
+        result = f"You need a torch to enter the cave.\n\n{current_place()}"
     return result
 
 def search_cave(game_place):
     if inventory.has_item('Sword'):
-        return f"You find nothing of interest.\n\n{game_places[game_state]['Story']}"
+        return f"You find nothing of interest.\n\n{current_place()}"
     else:
         inventory.collect_item('Sword')
         game_places[game_state]['Story'] = 'You are inside the cave\n\nDo you wish to leave?'
-        return f"You find a dull sword!\n\n{game_places[game_state]['Story']}"
+        return f"You find a dull sword!\n\n{current_place()}"
     
 
 def enter_castle(game_place):
@@ -33,17 +33,17 @@ def enter_castle(game_place):
     if inventory.has_item('Key'):
         result = move(game_place)
     else:
-        result = f"A key is needed to enter the castle.\nPerhaps the man in the forest can help.\n\n{game_places[game_state]['Story']}"
+        result = f"A key is needed to enter the castle.\nPerhaps the man in the forest can help.\n\n{current_place()}"
     return result
 
 def talk_to_knight(game_place):
     if inventory.has_item('Shield') or inventory.has_item('Potion'):
-        return f"The knight does not speak\n\n{game_places[game_state]['Story']}"
+        return f"The knight does not speak\n\n{current_place()}"
     else:
         inventory.collect_item('Shield')
         inventory.collect_item('Potion')
         game_places[game_state]['Story'] = 'You are inside the castle\n\nDo you wish to leave?'
-        return f"The knight speaks of a bounty at the nearby lake,\nyou recieve a shield and potion.\n\n{game_places[game_state]['Story']}"
+        return f"The knight speaks of a bounty at the nearby lake,\nyou recieve a shield and potion.\n\n{current_place()}"
     
 
 
@@ -102,7 +102,11 @@ def current_place():
     """
     global game_state
     
-    return f"{health.status()}\n\n{game_places[game_state]['Story']}"
+    return f"{game_places[game_state]['Story']}"
+
+def current_status():
+    
+    return f"{health.status()}"
 
 def game_play(user_input):
     """
@@ -121,7 +125,7 @@ def game_play(user_input):
         story_result = ''
         valid_tokens = token.valid_list(user_input)
         if not valid_tokens:
-            story_result = f"PLEASE ENTER A VALID COMMAND\n\n{game_places[game_state]['Story']}"
+            story_result = f"PLEASE ENTER A VALID COMMAND\n\n{current_place()}"
             
         else:
             for atoken in valid_tokens:
@@ -133,6 +137,6 @@ def game_play(user_input):
                     place = game_place[the_place]
                     story_result = place[0](place)
                 else:
-                    story_result = f"You can not go {atoken} from here\n\n{game_places[game_state]['Story']}"            
+                    story_result = f"You can not go {atoken} from here\n\n{current_place()}"            
                     
         return story_result
