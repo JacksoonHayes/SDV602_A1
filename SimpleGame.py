@@ -2,7 +2,6 @@
 A comment describing the game module
 """
 import PySimpleGUI as sg
-import cmd_parser.token as token
 import cmd_parser.command_manager as cm
 import inventory.inv as inventory
 import status.health as health
