@@ -5,20 +5,46 @@ import cmd_parser.token as token
 
 
 def move(game_place):
-    
     global game_state
     
     game_state = game_place[1]
-    
     return current_place()
+
 
 def enter_cave(game_place):
     result = ''
     if inventory.has_item('Torch'):
         result = move(game_place)
     else:
-        result = "You don't have a torch to enter the cave."
+        result = f"You need a torch to enter the cave.\n\n{game_places[game_state]['Story']}"
     return result
+
+def search_cave(game_place):
+    if inventory.has_item('Sword'):
+        return f"You find nothing of interest.\n\n{game_places[game_state]['Story']}"
+    else:
+        inventory.collect_item('Sword')
+        game_places[game_state]['Story'] = 'You are inside the cave\n\nDo you wish to leave?'
+        return f"You find a dull sword!\n\n{game_places[game_state]['Story']}"
+    
+
+def enter_castle(game_place):
+    result = ''
+    if inventory.has_item('Key'):
+        result = move(game_place)
+    else:
+        result = f"A key is needed to enter the castle.\nPerhaps the man in the forest can help.\n\n{game_places[game_state]['Story']}"
+    return result
+
+def talk_to_knight(game_place):
+    if inventory.has_item('Shield') or inventory.has_item('Potion'):
+        return f"The knight does not speak\n\n{game_places[game_state]['Story']}"
+    else:
+        inventory.collect_item('Shield')
+        inventory.collect_item('Potion')
+        game_places[game_state]['Story'] = 'You are inside the castle\n\nDo you wish to leave?'
+        return f"The knight speaks of a bounty at the nearby lake,\nyou recieve a shield and potion.\n\n{game_places[game_state]['Story']}"
+    
 
 
 # Brief comment about how the following lines work
@@ -31,15 +57,15 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                           'Image': 'town.png'
                           },
                
-               'Cave': {'Story': 'You are at the Cave.\n\nTo the South is a Town.\n\nDo you wish to enter the Cave?',
+               'Cave': {'Story': 'You are at a Cave.\n\nTo the South is a Town.\n\nDo you wish to enter the Cave?',
                         'South': (move, 'Town'),
-                        'Enter': (move, 'InCave'),
+                        'Enter': (enter_cave, 'InCave'),
                         'Image': 'cave.png'
                         },
                
-               'InCave': {'Story': 'You are inside the Cave.\n\nDo you wish to leave?',
+               'InCave': {'Story': 'The cave is dimly lit, but it may be worth searching\n\nDo you wish to leave?',
                                 'Leave': (move, 'Cave'),
-                                'Item': 'Sword',
+                                'Search': (search_cave, 'InCave'),
                                 'Image': 'dead.png'
                             },
                
@@ -50,13 +76,13 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
 
                'Castle': {'Story': 'You are at the Castle.\n\nTo the North is a Town.\n\nDo you wish to enter the Castle?',
                           'North': (move, 'Town'),
-                          'Enter': (move, 'InCastle'),
+                          'Enter': (enter_castle, 'InCastle'),
                           'Image': 'castle.png'
                         },
                
-               'InCastle': {'Story': 'You are inside the Castle.\n\nDo you wish to leave the Castle?',
+               'InCastle': {'Story': 'You are greated by a knight\nTalk to the knight?\n\nDo you wish to leave?',
                             'Leave': (move, 'Castle'),
-                            'Item': 'Shield',
+                            'Talk': (talk_to_knight, 'InCastle'),
                             'Image': 'castle.png'
                         },
                
@@ -76,7 +102,7 @@ def current_place():
     """
     global game_state
     
-    return f"{health.show_health()}       {inventory.inv_count()}\n\n{game_places[game_state]['Story']}"
+    return f"{health.status()}\n\n{game_places[game_state]['Story']}"
 
 def game_play(user_input):
     """
@@ -101,11 +127,8 @@ def game_play(user_input):
             for atoken in valid_tokens:
                 game_place = game_places[game_state]
                 the_place = atoken.capitalize()
-                
-                if cave_item() == True:
-                    story_result = f"You found a Sword\n\n{game_places[game_state]['Story']}"
-                    
-                elif the_place in game_place:
+
+                if the_place in game_place:
                     health.decrease_health(5)
                     place = game_place[the_place]
                     story_result = place[0](place)
