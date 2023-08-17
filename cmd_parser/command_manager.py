@@ -43,7 +43,20 @@ def talk_to_knight(game_place):
         game_places[game_state]['Story'] = 'You are inside the castle\n\nDo you wish to leave?'
         return f"The knight speaks of a bounty at the nearby lake,\nyou recieve a shield and potion.\n\n{current_place()}"
 
-
+def talk_to_warrior(game_place):
+    global game_state
+    if not inventory.has_item('Key'):
+        game_state = game_place[1]
+        return current_status()
+    
+def warrior_diologue():
+    global game_state
+    if inventory.has_item('Sword'):
+        game_places[game_state]['Story'] = 'Duel'
+        return f"You have a sword, you can fight the warrior.\n\n{current_place()}"
+    else:
+        game_places[game_state]['Story'] = 'no sword'
+        return f"You do not have a sword, you can not fight the warrior.\n\n{current_place()}"
 
 
 
@@ -75,14 +88,14 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                           'Potion': (health.use_potion, 'InCave')
                         },
                
-               'Forest': {'Story': f'You are in the Forest\n\nTo the West is a Town.',
+               'Forest': {'Story': 'You are in the Forest\n\nYou are greeted by a travelling warrior heading west\nTalk to the warrior?\n\nTo the West is a Town.',
                           'West': (move, 'Town'),
-                          'Talk': 'Warrior',
+                          'Talk': (talk_to_warrior, 'Warrior'),
                           'Image': 'forest.png',
                           'Potion': (health.use_potion, 'Forest')
                         },
                
-               'Warrior': {'Story': 'You are in the Forest\n\nTo the West is a Town.',
+               'Warrior': {'Story': 'The warrior wants to duel\n\nDo you wish to leave?',
                             'West': (move, 'Town'),
                             'Leave': (move, 'Town'),
                             # 'Fight': (health.fight, 'Warrior'),
