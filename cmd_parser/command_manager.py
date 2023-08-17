@@ -26,21 +26,6 @@ def search_cave(game_place):
         game_places[game_state]['Story'] = 'You are inside the cave\n\nDo you wish to leave?'
         return f"You find a dull sword!\n\n{current_place()}"
     
-
-def meet_warrior():
-    if inventory.has_item('Key'):
-        return "The Warrior has gone."
-    else:
-        return "A travelling Warrior headed West greets you.\nTalk to the Warrior?"
-    
-def talk_to_warrior():
-    if not inventory.has_item('Key'):
-        if inventory.has_item('Sword'):
-            return f"The Warrior requests a duel!\nYou can fight or leave?\n\n{current_place()}"
-        else:
-            return f"The Warrior is seeking a duel.\nReturn when you have a sword.\n\n{current_place()}"
-
-
 def enter_castle(game_place):
     result = ''
     if inventory.has_item('Key'):
@@ -57,6 +42,12 @@ def talk_to_knight(game_place):
         inventory.collect_item('Potion')
         game_places[game_state]['Story'] = 'You are inside the castle\n\nDo you wish to leave?'
         return f"The knight speaks of a bounty at the nearby lake,\nyou recieve a shield and potion.\n\n{current_place()}"
+
+
+
+
+
+
 
 
 # Brief comment about how the following lines work
@@ -84,14 +75,14 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                           'Potion': (health.use_potion, 'InCave')
                         },
                
-               'Forest': {'Story': f'You are in the Forest\n\n{meet_warrior()}\n\nTo the West is a Town.',
+               'Forest': {'Story': f'You are in the Forest\n\nTo the West is a Town.',
                           'West': (move, 'Town'),
-                          'Talk': (move, 'Warrior'),
+                          'Talk': 'Warrior',
                           'Image': 'forest.png',
                           'Potion': (health.use_potion, 'Forest')
                         },
                
-               'Warrior': {'Story': f'{talk_to_warrior}\n\nYou are in the Forest\n\nTo the West is a Town.',
+               'Warrior': {'Story': 'You are in the Forest\n\nTo the West is a Town.',
                             'West': (move, 'Town'),
                             'Leave': (move, 'Town'),
                             # 'Fight': (health.fight, 'Warrior'),
