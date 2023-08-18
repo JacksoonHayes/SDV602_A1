@@ -61,13 +61,11 @@ def is_knight_there(game_place):
         return move(game_place)
     
 def talk_to_knight(game_place):
-    if inventory.has_item('Sword'):
-        return f"The knight requests a duel\nYou can fight or leave?\n\n{current_place()}"    
-    else:
-        game_places['Knight']['Story'] = f"The knight is seeking a duel\nReturn when you have a sword\n\n{current_place()}"
-        return move((move, 'Knight'))
+    move((move, 'Knight'))
+    if not inventory.has_item('Sword'):
+        return f"You do not have a sword to duel with.\n\n{current_place()}"
     
-    
+# Change code above to a regular if statement. if user has sword change game story to fight and shit
 
         
         
