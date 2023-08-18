@@ -55,15 +55,17 @@ def is_knight_there(game_place):
     global game_places
     
     if inventory.has_item('Key'):
-        game_places['Forest']['Story'] = "You are in a Forest\n\nTo the West is a Town."
+        game_places['Forest']['Story'] = "You are in the Forest\n\nTo the West is a Town."
         return move((move, 'Forest'))
     else:
         return move(game_place)
     
 def talk_to_knight(game_place):
     move((move, 'Knight'))
-    if not inventory.has_item('Sword'):
-        return f"You do not have a sword to duel with.\n\n{current_place()}"
+    if inventory.has_item('Sword'):
+        return f"{health.status()}\n\nThe Knight requests a duel.\nYou can fight or leave?\n\n{current_place()}"
+    else:
+        return f"{health.status()}\n\nThe Knight is seeking a duel.\nReturn when you have a sword.\n\n{current_place()}"
     
 # Change code above to a regular if statement. if user has sword change game story to fight and shit
 
@@ -94,14 +96,14 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                           'Potion': (use_potion, 'InCave')
                         },
                
-               'Forest': {'Story': "You are in a Forest\n\nYou are greeted by a travelling Knight heading west\nTalk to the Knight?\n\nTo the West is a Town.",
+               'Forest': {'Story': "You are greeted by a travelling Knight heading west\nTalk to the Knight?\n\nYou are in a Forest\n\nTo the West is a Town.",
                           'West': (move, 'Town'),
                           'Talk': (talk_to_knight, 'Knight'),
                           'Image': 'forest.png',
                           'Potion': (use_potion, 'Forest')
                         },
                
-               'Knight': {'Story': 'The Knight wants to duel\n\nDo you wish to leave?',
+               'Knight': {'Story': 'You are in the Forest.\n\nTo the West is a Town.',
                             'West': (move, 'Town'),
                             'Leave': (move, 'Town'),
                             # 'Fight': (health.fight, 'Knight'),
@@ -169,6 +171,10 @@ def game_play(user_input):
             for atoken in valid_tokens:
                 game_place = game_places[game_state]
                 the_place = atoken.capitalize()
+                
+                if the_place == "Talk" and game_state == "Forest" and inventory.has_item('Key'):
+                    story_result = f"{health.status()}\n\nYou are in the Forest.\n\nTo the West is a Town."
+                    continue
 
                 if the_place in game_place:
                     health.decrease_health(5)
