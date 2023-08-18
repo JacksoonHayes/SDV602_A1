@@ -45,23 +45,6 @@ def talk_to_king(game_place):
 
 
 
-def talk_to_knight(game_place):
-    global game_state
-    if not inventory.has_item('Key'):
-        if not inventory.has_item('Sword'):
-            game_places[game_state]['Story'] = 'no sword'
-            return f"The Knight does not speak\n\n{current_place()}"
-        game_state = game_place[1]
-        return current_status()
-    
-def is_knight_there(game_place):
-    if inventory.has_item('Key'):
-        move(game_place)
-        return f"The Knight is not here\n\n{current_place()}"
-    else:
-        move(game_place)
-        game_places[game_state]['Story'] = 'The knight is here'
-    
         
 # Brief comment about how the following lines work
 game_state = 'Town'
