@@ -46,20 +46,20 @@ def talk_to_knight(game_place):
 def talk_to_warrior(game_place):
     global game_state
     if not inventory.has_item('Key'):
+        if not inventory.has_item('Sword'):
+            game_places[game_state]['Story'] = 'no sword'
+            return f"The warrior does not speak\n\n{current_place()}"
         game_state = game_place[1]
         return current_status()
     
-def warrior_diologue():
-    global game_state
-    if inventory.has_item('Sword'):
-        game_places[game_state]['Story'] = 'Duel'
-        return f"You have a sword, you can fight the warrior.\n\n{current_place()}"
+def is_warrior_there(game_place):
+    if inventory.has_item('Key'):
+        move(game_place)
+        return f"The warrior is not here\n\n{current_place()}"
     else:
-        game_places[game_state]['Story'] = 'no sword'
-        return f"You do not have a sword, you can not fight the warrior.\n\n{current_place()}"
-
-
-
+        move(game_place)
+        game_places[game_state]['Story'] = 'The warrior is here'
+        
 
 
 
@@ -67,7 +67,7 @@ def warrior_diologue():
 game_state = 'Town'
 game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\nTo the South is a Castle.\nTo the East is a Forest\nTo the West is a Lake.',
                           'North': (move, 'Cave'),
-                          'East': (move, 'Forest'),
+                          'East': (is_warrior_there, 'Forest'),
                           'South': (move, 'Castle'),
                           'West': (move, 'Lake'),
                           'Image': 'town.png',
