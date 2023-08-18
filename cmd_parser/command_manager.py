@@ -9,7 +9,14 @@ def move(game_place):
     game_state = game_place[1]
     return current_status()
 
-
+def use_potion(game_place):
+    if 'Potion' in inventory.player_inventory:
+        inventory.remove_item('Potion')
+        health.increase_health(50)
+        return (f"You used a potion to increase your health by 50\n\n{current_place()}")
+    else:
+        return (f"You have no potions to use\n\n{current_place()}")
+    
 def enter_cave(game_place):
     result = ''
     if inventory.has_item('Torch'):
@@ -55,52 +62,45 @@ def is_knight_there(game_place):
     
 def talk_to_knight(game_place):
     if inventory.has_item('Sword'):
-        return f"The Knight does not speak\n\n{current_place()}"
-        
+        return f"The knight requests a duel\nYou can fight or leave?\n\n{current_place()}"    
     else:
-        game_places['Knight']['Story'] = 'Return when you have a sword'
+        game_places['Knight']['Story'] = f"The knight is seeking a duel\nReturn when you have a sword\n\n{current_place()}"
         return move((move, 'Knight'))
     
     
-def use_potion():
-    if 'Potion' in inventory.player_inventory:
-        inventory.remove_item('Potion')
-        health.increase_health(40)
-        return (f"You used a potion to increase your health by 30\n\n{current_place()}")
-    else:
-        return (f"You have no potions to use\n\n{current_place()}")
+
         
         
 # Brief comment about how the following lines work
 game_state = 'Town'
 game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\nTo the South is a Castle.\nTo the East is a Forest\nTo the West is a Lake.',
-                          'North': (move, 'Cave'),
-                          'East': (is_knight_there, 'Forest'),
-                          'South': (move, 'Castle'),
-                          'West': (move, 'Lake'),
-                          'Image': 'town.png',
-                          'Potion': use_potion
+                         'North': (move, 'Cave'),
+                         'East': (is_knight_there, 'Forest'),
+                         'South': (move, 'Castle'),
+                         'West': (move, 'Lake'),
+                         'Image': 'town.png',
+                         'Potion': (use_potion, 'Town')
                         },
                
                'Cave': {'Story': 'You are at a Cave.\n\nTo the South is a Town.\n\nDo you wish to enter the Cave?',
                         'South': (move, 'Town'),
                         'Enter': (enter_cave, 'InCave'),
                         'Image': 'cave.png',
-                        'Potion': use_potion
+                        'Potion': (use_potion, 'Cave')
                         },
                
                'InCave': {'Story': 'The cave is dimly lit, but it may be worth searching.\n\nDo you wish to leave?',
                           'Leave': (move, 'Cave'),
                           'Search': (search_cave, 'InCave'),
                           'Image': 'dead.png',
-                          'Potion': use_potion
+                          'Potion': (use_potion, 'InCave')
                         },
                
                'Forest': {'Story': "You are in a Forest\n\nYou are greeted by a travelling Knight heading west\nTalk to the Knight?\n\nTo the West is a Town.",
                           'West': (move, 'Town'),
                           'Talk': (talk_to_knight, 'Knight'),
                           'Image': 'forest.png',
-                          'Potion': use_potion
+                          'Potion': (use_potion, 'Forest')
                         },
                
                'Knight': {'Story': 'The Knight wants to duel\n\nDo you wish to leave?',
@@ -108,27 +108,27 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                             'Leave': (move, 'Town'),
                             # 'Fight': (health.fight, 'Knight'),
                             'Image': 'dead.png',
-                            'Potion': use_potion
+                            'Potion': (use_potion, 'Knight')
                         },
 
                'Castle': {'Story': 'You are at the Castle.\n\nTo the North is a Town.\n\nDo you wish to enter the Castle?',
                           'North': (move, 'Town'),
                           'Enter': (enter_castle, 'InCastle'),
                           'Image': 'castle.png',
-                          'Potion': use_potion
+                          'Potion': (use_potion, 'Castle')
                         },
                
                'InCastle': {'Story': 'A King is standing in front of you.\nTalk to the King?\n\nDo you wish to leave?',
                             'Leave': (move, 'Castle'),
                             'Talk': (talk_to_king, 'InCastle'),
                             'Image': 'castle.png',
-                            'Potion': use_potion
+                            'Potion': (use_potion, 'InCastle')
                         },
                
                'Lake': {'Story': 'You arrive at a Lake.\n\nTo the East is a Town.',
                           'East': (move, 'Town'),
                           'Image': 'lake.png',
-                          'Potion': use_potion
+                          'Potion': (use_potion, 'Lake')
                         },
                }
 
