@@ -6,6 +6,9 @@ def display_inventory(inventory):
         return "You have no items in your inventory."
     else:
         return "\n".join(f"{i + 1}. {item}" for i, item in enumerate(inventory))
+    
+def remove_item(item):
+    player_inventory.remove(item)
 
 def collect_item(item):
     player_inventory.add(item)

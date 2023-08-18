@@ -11,7 +11,7 @@ def fight():
         inventory.add_item('Key')
         return (f"You defeat the warrior in a duel.\nHe gives you a key.\n\n{cm.current_place()}")
     else:
-        health.decrease_health(15)
+        health.decrease_health(10)
         return (f"The warrior defeats you.\n\n{cm.current_place()}")
     
     
