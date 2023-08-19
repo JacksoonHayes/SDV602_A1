@@ -61,10 +61,8 @@ def enter_castle(game_place):
     return result
 
 def talk_to_king(game_place):
-    if inventory.has_item('Monster head'):
-        inventory.remove_item('Monster Head')
-        inventory.collect_item('Cloak')
-        return f"The King is amazed\nYou are gifted a cloak for your efforts.\n\n{current_place()}"
+    if inventory.has_item('Monster Head'):
+        return f"The King thanks you for defeating the monster.\nYou recieve a cloack for your efforts.\n\n{current_place()}"
     else:
         if inventory.has_item('Shield') or inventory.has_item('Potion'):
             return f"The King does not speak\n\n{current_place()}"
@@ -203,3 +201,9 @@ def game_play(user_input):
                     story_result = f"You can not do that from here.\n\n{current_place()}"            
                     
         return story_result
+
+def restart_game():
+    global game_state
+    health.player_health = 100
+    inventory.clear_inventory()  
+    game_state = 'Town'

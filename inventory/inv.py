@@ -1,4 +1,4 @@
-player_inventory = set(['Torch', 'Key'])
+player_inventory = set(['Torch'])
 
 def display_inventory(inventory):
     if inventory == set([]):
@@ -20,3 +20,7 @@ def show_inventory():
     
 def has_item(item):
     return item in player_inventory
+
+def clear_inventory():
+    player_inventory.clear()
+    player_inventory.add('Torch')

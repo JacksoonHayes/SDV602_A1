@@ -18,7 +18,7 @@ def make_a_window():
     sg.theme('Dark Brown 6')  # please make your windows
     prompt_input = [sg.Text('Enter your command', font='Any 14'), sg.Input(
         key='-IN-', size=(40, 1), font='Any 14')]
-    buttons = [sg.Button('Inventory'), sg.Button('Enter',  bind_return_key=True), sg.Button('Exit')]
+    buttons = [sg.Button('Inventory'), sg.Button('Enter',  bind_return_key=True), sg.Button('Restart')]
     command_col = sg.Column([prompt_input, buttons], element_justification='r')
     layout = [[sg.Image(r'images/town.png', size=(175, 175), key="-IMG-"), sg.Text(cm.current_status(), size=(100, 10), font='Any 12', key='-OUTPUT-')],
               [command_col]]
@@ -58,8 +58,15 @@ if __name__ == "__main__":
             else:
                 window['-OUTPUT-'].update(inventory.show_inventory())
             pass
-
-        elif event == 'Exit' or event is None or event == sg.WIN_CLOSED:
+        
+        elif event == 'Restart':
+            cm.restart_game()
+            window['-OUTPUT-'].update(cm.current_status())
+            window['-IMG-'].update(r'images/town.png', size=(175, 175))  # Reset to the initial image
+            window['-IN-'].update(disabled=False)
+            
+            
+        elif event is None or event == sg.WIN_CLOSED:
             break
 
         else:
