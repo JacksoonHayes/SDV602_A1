@@ -76,7 +76,7 @@ def lake_fight(game_place):
     if inventory.has_item('Shield'):
         return fight.monster_fight(game_place)
     else:
-        return f"You need a shield to fight the monster.\n\n{current_place()}"
+        return f"The monster is too strong.\nReturn when you have a sword and shield.\n\n{current_place()}"
     
         
 # Brief comment about how the following lines work
