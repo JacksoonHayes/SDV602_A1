@@ -61,16 +61,18 @@ def enter_castle(game_place):
     return result
 
 def talk_to_king(game_place):
-    if not inventory.has_item('Monster head'):
+    if inventory.has_item('Monster head'):
+        inventory.remove_item('Monster Head')
+        inventory.collect_item('Cloak')
+        return f"The King is amazed\nYou are gifted a cloak for your efforts.\n\n{current_place()}"
+    else:
         if inventory.has_item('Shield') or inventory.has_item('Potion'):
             return f"The King does not speak\n\n{current_place()}"
         else:
             inventory.collect_item('Shield')
             inventory.collect_item('Potion')
-            game_places[game_state]['Story'] = 'You are inside the castle\n\nDo you wish to leave?'
             return f"The King speaks of a bounty at the nearby lake.\nYou recieve a shield and potion.\n\n{current_place()}"
-    else:
-        return f"The King is amazed\nYou are gifted a cloak for your efforts.\n\n{current_place()}"
+
 
 def lake_fight(game_place):
     if inventory.has_item('Shield'):
@@ -126,7 +128,7 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                           'Potion': (use_potion, 'Castle')
                         },
                
-               'InCastle': {'Story': 'A King is standing in front of you.\nTalk to the King?\n\nDo you wish to leave?',
+               'InCastle': {'Story': 'The King is standing in front of you.\nTalk to the King?\n\nDo you wish to leave?',
                             'Leave': (move, 'Castle'),
                             'Talk': (talk_to_king, 'InCastle'),
                             'Image': 'castle.png',
@@ -183,8 +185,14 @@ def game_play(user_input):
                 if the_place == "Talk" and game_state == "Forest" and inventory.has_item('Key'):
                     story_result = f"{health.status()}\n\nYou are in the Forest.\n\nTo the West is a Town."
                     continue
+                if the_place == "Fight" and game_state == "Knight" and not inventory.has_item('Sword'):
+                    story_result = talk_to_knight(game_place)
+                    continue  
                 if the_place == "Fight" and game_state == "Knight" and inventory.has_item('Key'):
                     story_result = f"{health.status()}\n\nYou are in the Forest.\n\nTo the West is a Town."
+                    continue
+                if the_place == "Fight" and game_state == "Lake" and inventory.has_item('Monster Head'):
+                    story_result = f"{health.status()}\n\nYou are at the Lake.\n\nTo the East is a Town."
                     continue
 
                 if the_place in game_place:
