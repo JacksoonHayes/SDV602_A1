@@ -1,4 +1,4 @@
-player_inventory = set(['Torch', 'Sword'])
+player_inventory = set(['Torch', 'Shield'])
 
 def display_inventory(inventory):
     if inventory == set([]):

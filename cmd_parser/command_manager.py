@@ -4,7 +4,6 @@ import cmd_parser.token as token
 import monster.fight as fight
 
 
-
 def move(game_place):
     global game_state
     
@@ -73,9 +72,12 @@ def talk_to_king(game_place):
     else:
         return f"The King is amazed\nYou are gifted a cloak for your efforts.\n\n{current_place()}"
 
-
-
-        
+def lake_fight(game_place):
+    if inventory.has_item('Shield'):
+        return fight.monster_fight(game_place)
+    else:
+        return f"You need a shield to fight the monster.\n\n{current_place()}"
+    
         
 # Brief comment about how the following lines work
 game_state = 'Town'
@@ -131,9 +133,9 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                             'Potion': (use_potion, 'InCastle')
                         },
                
-               'Lake': {'Story': 'You arrive at the Lake.\nA strong monster lurks near the waters edge.\n\nTo the East is a Town.',
+               'Lake': {'Story': 'You arrive at the Lake.\n\nA strong monster lurks near the waters edge.\nFight the monster?\n\nTo the East is a Town.',
                           'East': (move, 'Town'),
-                          'Fight': (fight.monster_fight, 'Lake'),
+                          'Fight': (lake_fight, 'Lake'),
                           'Image': 'lake.png',
                           'Potion': (use_potion, 'Lake')
                         },
