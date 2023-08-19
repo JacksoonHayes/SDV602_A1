@@ -6,7 +6,7 @@ import monster.fight as fight
 
 def move(game_place):
     global game_state
-    
+    health.decrease_health(5)
     game_state = game_place[1]
     return current_status()
 
@@ -80,7 +80,7 @@ def lake_fight(game_place):
     
         
 # Brief comment about how the following lines work
-game_state = 'Town'
+game_state = 'Cave'
 game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\nTo the South is a Castle.\nTo the East is a Forest\nTo the West is a Lake.',
                          'North': (move, 'Cave'),
                          'East': (is_knight_there, 'Forest'),
@@ -97,7 +97,7 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                         'Potion': (use_potion, 'Cave')
                         },
                
-               'InCave': {'Story': 'The cave is dimly lit, but it may be worth searching.\nSearch the cave?\n\nDo you wish to leave?',
+               'InCave': {'Story': 'The cave is barren and dimly lit, but it may be worth searching.\nSearch the cave?\n\nDo you wish to leave?',
                           'Leave': (move, 'Cave'),
                           'Search': (search_cave, 'InCave'),
                           'Image': 'dead.png',
@@ -173,7 +173,7 @@ def game_play(user_input):
         story_result = ''
         valid_tokens = token.valid_list(user_input)
         if not valid_tokens:
-            story_result = f"Please enter a valid command.\n\n{current_place()}"
+            story_result = f"{health.status()}\n\nPLEASE ENTER A VALID COMMAND\n\n{current_place()}"
             
         else:
             for atoken in valid_tokens:
@@ -192,18 +192,12 @@ def game_play(user_input):
                 if the_place == "Fight" and game_state == "Lake" and inventory.has_item('Monster Head'):
                     story_result = f"{health.status()}\n\nYou are at the Lake.\n\nTo the East is a Town."
                     continue
-
+                
                 if the_place in game_place:
-                    health.decrease_health(5)
                     place = game_place[the_place]
                     story_result = place[0](place)
                 else:
-                    story_result = f"You can not do that from here.\n\n{current_place()}"            
+                    story_result = f"{health.status()}\n\nYou can not do that from here.\n\n{current_place()}"            
                     
         return story_result
-
-def restart_game():
-    global game_state
-    health.player_health = 100
-    inventory.clear_inventory()  
-    game_state = 'Town'
+        

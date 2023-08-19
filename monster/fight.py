@@ -47,6 +47,6 @@ def monster_fight(game_place):
     if monster_health <= 30:
         inventory.collect_item('Monster Head')
         cm.game_places['Lake']['Story'] = "You are at the Lake\n\nTo the East is a Town."
-        return (f"{health.status()}\n\nYou defeat the Monster.\nYou have lost {health_lost} health from the fight\n\n{cm.current_place()}")
+        return (f"{health.status()}\n\nYou defeat the Monster.\nYou have lost {health_lost} health from the fight\n\nYou should return to the King.\n\n{cm.current_place()}")
     else:
         return (f"{health.status()}\n\nYou have lost to the monster.\n\n{cm.current_place()}")
