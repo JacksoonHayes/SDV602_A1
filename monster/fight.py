@@ -25,7 +25,7 @@ def duel(game_place):
         inventory.collect_item('Key')
         return (f"{health.status()}\n\nYou defeat the Knight.\nHe gives you a key and leaves.\nYou have lost {health_lost} health from the duel.\n\n{cm.current_place()}")
     else:
-        return (f"The Knight defeats you.\n\n{cm.current_place()}")
+        return (f"{health.status()}The Knight defeats you.\n\n{cm.current_place()}")
 
 def monster_fight(game_place):    
     monster_health = 100
@@ -49,4 +49,4 @@ def monster_fight(game_place):
         cm.game_places['Lake']['Story'] = "You are at the Lake\n\nTo the East is a Town."
         return (f"{health.status()}\n\nYou defeat the Monster.\nYou have lost {health_lost} health from the fight\n\n{cm.current_place()}")
     else:
-        return (f"You have lost to the monster.\n\n{cm.current_place()}")
+        return (f"{health.status()}You have lost to the monster.\n\n{cm.current_place()}")

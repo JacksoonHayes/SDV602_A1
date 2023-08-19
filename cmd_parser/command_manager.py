@@ -14,25 +14,25 @@ def use_potion(game_place):
     if 'Potion' in inventory.player_inventory:
         inventory.remove_item('Potion')
         health.increase_health(50)
-        return (f"You used a potion to increase your health by 50\n\n{current_place()}")
+        return (f"{health.status()}You used a potion to increase your health by 50\n\n{current_place()}")
     else:
-        return (f"You have no potions to use\n\n{current_place()}")
+        return (f"{health.status()}You have no potions to use\n\n{current_place()}")
     
 def enter_cave(game_place):
     result = ''
     if inventory.has_item('Torch'):
         result = move(game_place)
     else:
-        result = f"You need a torch to enter the cave.\n\n{current_place()}"
+        result = f"{health.status()}You need a torch to enter the cave.\n\n{current_place()}"
     return result
 
 def search_cave(game_place):
     if inventory.has_item('Sword'):
-        return f"You find nothing of interest.\n\n{current_place()}"
+        return f"{health.status()}You find nothing of interest.\n\n{current_place()}"
     else:
         inventory.collect_item('Sword')
         game_places[game_state]['Story'] = 'You are inside the cave\n\nDo you wish to leave?'
-        return f"You find a dull sword!\n\n{current_place()}"
+        return f"{health.status()}You find a dull sword!\n\n{current_place()}"
 
 
 def is_knight_there(game_place):
@@ -57,26 +57,26 @@ def enter_castle(game_place):
     if inventory.has_item('Key'):
         result = move(game_place)
     else:
-        result = f"A key is needed to enter the castle.\nPerhaps the man in the forest can help.\n\n{current_place()}"
+        result = f"{health.status()}A key is needed to enter the castle.\nPerhaps the man in the forest can help.\n\n{current_place()}"
     return result
 
 def talk_to_king(game_place):
     if inventory.has_item('Monster Head'):
-        return f"The King thanks you for defeating the monster.\nYou recieve a cloack for your efforts.\n\n{current_place()}"
+        return f"{health.status()}The King thanks you for defeating the monster.\nYou recieve a cloack for your efforts.\n\n{current_place()}"
     else:
         if inventory.has_item('Shield') or inventory.has_item('Potion'):
-            return f"The King does not speak\n\n{current_place()}"
+            return f"{health.status()}The King does not speak\n\n{current_place()}"
         else:
             inventory.collect_item('Shield')
             inventory.collect_item('Potion')
-            return f"The King speaks of a bounty at the nearby lake.\nYou recieve a shield and potion.\n\n{current_place()}"
+            return f"{health.status()}The King speaks of a bounty at the nearby lake.\nYou recieve a shield and potion.\n\n{current_place()}"
 
 
 def lake_fight(game_place):
     if inventory.has_item('Shield'):
         return fight.monster_fight(game_place)
     else:
-        return f"The monster is too strong.\nReturn when you have a sword and shield.\n\n{current_place()}"
+        return f"{health.status()}The monster is too strong.\nReturn when you have a sword and shield.\n\n{current_place()}"
     
         
 # Brief comment about how the following lines work
