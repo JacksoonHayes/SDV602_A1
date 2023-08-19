@@ -3,29 +3,45 @@ import cmd_parser.command_manager as cm
 import status.health as health
 import random
 
-monster_health = 100
-
-def fight():
-    hit_chance = random.randint(1, 3)
-    if hit_chance == 1:
-        inventory.add_item('Key')
-        return (f"You defeat the warrior in a duel.\nHe gives you a key.\n\n{cm.current_place()}")
-    else:
-        health.decrease_health(10)
-        return (f"The warrior defeats you.\n\n{cm.current_place()}")
     
-    
-if __name__ == "__main__":
-    while health.player_health > 0 or monster_health > 0:
-        hit_chance = random.randint(1, 3)
+def duel(game_place):    
+    knight_health = 100
+    while health.player_health > 0 and knight_health > 30:
+        hit_chance = random.randint(1, 2)
         if hit_chance == 1:
-            crit_chance = random.randint(1, 3)
+            crit_chance = random.randint(1, 2)
             if crit_chance == 1:
-                monster_health -= 50
-                print(f"You hit the monster for 30 damage.\nMonster Health: {monster_health}")
+                knight_health -= 30
+                print(f"You hit the knight for 30 damage.\nKnight Health: {knight_health}")
             else:
-                monster_health -= 25
-                print(f"You hit the monster for 15 damage.\nMonster Health: {monster_health}")
+                knight_health -= 15
+                print(f"You hit the knight for 15 damage.\nknight Health: {knight_health}")
         else:
-            health.player_health -= 15
-            print(f"The monster hit you for 5 damage.\nPlayer Health: {health.player_health}")
+            health.player_health -= 5
+            print(f"The knight hit you for 5 damage.\nPlayer Health: {health.player_health}")
+    if knight_health <= 30:
+        inventory.collect_item('Key')
+        return (f"{health.status()}\n\nYou defeat the Knight.\nHe gives you a key and leaves.\n\n{cm.current_place()}")
+    else:
+        return (f"The Knight defeats you.\n\n{cm.current_place()}")
+
+def monster_fight(game_place):    
+    monster_health = 100
+    while health.player_health > 0 and monster_health > 30:
+        hit_chance = random.randint(1, 2)
+        if hit_chance == 1:
+            crit_chance = random.randint(1, 2)
+            if crit_chance == 1:
+                monster_health -= 30
+                print(f"You hit the Monster for 30 damage.\nMonster Health: {monster_health}")
+            else:
+                knight_health -= 15
+                print(f"You hit the Monster for 15 damage.\nMonster Health: {monster_health}")
+        else:
+            health.player_health -= 5
+            print(f"The Monster hit you for 5 damage.\nPlayer Health: {health.player_health}")
+    if knight_health <= 30:
+        inventory.collect_item('Monster Head')
+        return (f"{health.status()}\n\nYou defeat the Monster.\n\n{cm.current_place()}")
+    else:
+        return (f"You have lost to the monster.\n\n{cm.current_place()}")

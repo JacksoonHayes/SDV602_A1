@@ -1,4 +1,4 @@
-player_inventory = set(['Torch', 'Key'])
+player_inventory = set(['Torch', 'Sword'])
 
 def display_inventory(inventory):
     if inventory == set([]):
@@ -13,7 +13,7 @@ def collect_item(item):
     player_inventory.add(item)
 
 def inv_count():
-    return (f"Inventory: {len(player_inventory)} / 5")
+    return (f"Inventory: {len(player_inventory)} / 7")
 
 def show_inventory():
     return (f"Inventory: \n\n{display_inventory(player_inventory)}")
