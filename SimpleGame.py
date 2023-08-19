@@ -1,11 +1,13 @@
 """ 
 A comment describing the game module
 """
+import copy
 import PySimpleGUI as sg
+
+
 import cmd_parser.command_manager as cm
 import inventory.inv as inventory
-import status.health as health
-import copy
+from status import health
 
 original_story = copy.deepcopy(cm.game_places)
 
@@ -38,12 +40,8 @@ def make_a_window():
 
 
 if __name__ == "__main__":
-    # testing for now
-    # print(show_current_place())
-    # current_story = game_play('North')
-    # print(show_current_place())
-
-    # A persisent window - stays until "Exit" is pressed
+    
+    # A persisent window - stays until "Restart" or 'X' in top right is pressed
     window = make_a_window()
 
     while True:

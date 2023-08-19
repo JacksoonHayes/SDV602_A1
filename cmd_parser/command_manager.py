@@ -15,8 +15,7 @@ def use_potion(game_place):
         inventory.remove_item('Potion')
         health.increase_health(50)
         return (f"{health.status()}\n\nYou used a potion to increase your health by 50\n\n{current_place()}")
-    else:
-        return (f"{health.status()}\n\nYou have no potions to use\n\n{current_place()}")
+    return (f"{health.status()}\n\nYou have no potions to use\n\n{current_place()}")
     
 def enter_cave(game_place):
     result = ''
@@ -29,11 +28,9 @@ def enter_cave(game_place):
 def search_cave(game_place):
     if inventory.has_item('Sword'):
         return f"{health.status()}\n\nYou find nothing of interest.\n\n{current_place()}"
-    else:
-        inventory.collect_item('Sword')
-        game_places[game_state]['Story'] = 'You are inside the cave\n\nDo you wish to leave?'
-        return f"{health.status()}\n\nYou find a dull sword!\n\n{current_place()}"
-
+    inventory.collect_item('Sword')
+    game_places[game_state]['Story'] = 'You are inside the cave\n\nDo you wish to leave?'
+    return f"{health.status()}\n\nYou find a dull sword!\n\n{current_place()}"
 
 def is_knight_there(game_place):
     global game_places
@@ -41,17 +38,14 @@ def is_knight_there(game_place):
     if inventory.has_item('Key'):
         game_places['Forest']['Story'] = "You are in the Forest\n\nTo the West is a Town."
         return move((move, 'Forest'))
-    else:
-        return move(game_place)
+    return move(game_place)
     
 def talk_to_knight(game_place):
     move((move, 'Knight'))
     if inventory.has_item('Sword'):
         return f"{health.status()}\n\nThe Knight requests a duel.\nYou can fight or leave?\n\n{current_place()}"
-    else:
-        return f"{health.status()}\n\nThe Knight is seeking a duel.\nReturn when you have a sword.\n\n{current_place()}"
+    return f"{health.status()}\n\nThe Knight is seeking a duel.\nReturn when you have a sword.\n\n{current_place()}"
     
-
 def enter_castle(game_place):
     result = ''
     if inventory.has_item('Key'):
@@ -76,9 +70,8 @@ def lake_fight(game_place):
     if inventory.has_item('Shield'):
         return fight.monster_fight(game_place)
     else:
-        return f"{health.status()}\n\nThe monster is too strong.\nReturn when you have a sword and shield.\n\n{current_place()}"
-    
-        
+        return f"{health.status()}\n\nThe monster is too strong.\nReturn when you have a sword and shield.\n\n{current_place()}"  
+
 # Brief comment about how the following lines work
 game_state = 'Cave'
 game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\nTo the South is a Castle.\nTo the East is a Forest\nTo the West is a Lake.',
@@ -89,28 +82,24 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                          'Image': 'town.png',
                          'Potion': (use_potion, 'Town')
                         },
-               
                'Cave': {'Story': 'You are at a Cave.\n\nTo the South is a Town.\n\nDo you wish to enter the Cave?',
                         'South': (move, 'Town'),
                         'Enter': (enter_cave, 'InCave'),
                         'Image': 'cave.png',
                         'Potion': (use_potion, 'Cave')
                         },
-               
                'InCave': {'Story': 'The cave is barren and dimly lit, but it may be worth searching.\nSearch the cave?\n\nDo you wish to leave?',
                           'Leave': (move, 'Cave'),
                           'Search': (search_cave, 'InCave'),
                           'Image': 'dead.png',
                           'Potion': (use_potion, 'InCave')
                         },
-               
                'Forest': {'Story': "You are greeted by a travelling Knight heading west\nTalk to the Knight?\n\nYou are in a Forest\n\nTo the West is a Town.",
                           'West': (move, 'Town'),
                           'Talk': (talk_to_knight, 'Knight'),
                           'Image': 'forest.png',
                           'Potion': (use_potion, 'Forest')
                         },
-               
                'Knight': {'Story': 'You are in the Forest.\n\nTo the West is a Town.',
                             'West': (move, 'Town'),
                             'Leave': (move, 'Town'),
@@ -118,21 +107,18 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                             'Image': 'dead.png',
                             'Potion': (use_potion, 'Knight')
                         },
-
                'Castle': {'Story': 'You are at the Castle.\n\nTo the North is a Town.\n\nDo you wish to enter the Castle?',
                           'North': (move, 'Town'),
                           'Enter': (enter_castle, 'InCastle'),
                           'Image': 'castle.png',
                           'Potion': (use_potion, 'Castle')
                         },
-               
                'InCastle': {'Story': 'The King is standing in front of you.\nTalk to the King?\n\nDo you wish to leave?',
                             'Leave': (move, 'Castle'),
                             'Talk': (talk_to_king, 'InCastle'),
                             'Image': 'castle.png',
                             'Potion': (use_potion, 'InCastle')
                         },
-               
                'Lake': {'Story': 'You arrive at the Lake.\n\nA strong monster lurks near the waters edge.\nFight the monster?\n\nTo the East is a Town.',
                           'East': (move, 'Town'),
                           'Fight': (lake_fight, 'Lake'),
@@ -148,8 +134,6 @@ def current_place():
     Returns:
         string: the story at the current place
     """
-    global game_state
-    
     return f"{game_places[game_state]['Story']}"
 
 def current_status():
@@ -166,22 +150,18 @@ def game_play(user_input):
     Returns:
         string: the story at the current place
     """
-    global game_state
 
-    while health.player_health > 0:
-        
+    while health.player_health > 0:     
         story_result = ''
         valid_tokens = token.valid_list(user_input)
         if not valid_tokens:
-            story_result = f"{health.status()}\n\nPLEASE ENTER A VALID COMMAND\n\n{current_place()}"
-            
+            story_result = f"{health.status()}\n\nPLEASE ENTER A VALID COMMAND\n\n{current_place()}"  
         else:
             for atoken in valid_tokens:
                 game_place = game_places[game_state]
                 the_place = atoken.capitalize()
-                
                 if the_place == "Talk" and game_state == "Forest" and inventory.has_item('Key'):
-                    story_result = f"{health.status()}\n\nYou are in the Forest.\n\nTo the West is a Town."
+                    story_result = f"{health.status()}\n\nYou are in the Forest.\n\n,To the West is a Town."
                     continue
                 if the_place == "Fight" and game_state == "Knight" and not inventory.has_item('Sword'):
                     story_result = talk_to_knight(game_place)
@@ -192,12 +172,10 @@ def game_play(user_input):
                 if the_place == "Fight" and game_state == "Lake" and inventory.has_item('Monster Head'):
                     story_result = f"{health.status()}\n\nYou are at the Lake.\n\nTo the East is a Town."
                     continue
-                
                 if the_place in game_place:
                     place = game_place[the_place]
                     story_result = place[0](place)
                 else:
                     story_result = f"{health.status()}\n\nYou can not do that from here.\n\n{current_place()}"            
-                    
         return story_result
         
