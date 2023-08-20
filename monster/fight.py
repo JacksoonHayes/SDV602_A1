@@ -1,7 +1,9 @@
+import random
+
 import inventory.inv as inventory
 import cmd_parser.command_manager as cm
 import status.health as health
-import random
+
 
 # Function for the duel with the Knight. Knights health needs to be below
 # 30 for the player to win. As its a duel the knight doesnt 'Die'
@@ -81,7 +83,7 @@ def monster_fight(game_place):
         inventory.collect_item('Monster Head')
         # Update the game story.
         cm.game_places['Lake']['Story'] = "You are at the Lake\n\nTo the East is a Town."
-        return (f"{health.status()}\n\nYou defeat the Monster and collect its head.\nYou should return to the King.\n\nYou have lost {health_lost} health from the fight\n\n{cm.current_place()}")
+        return (f"{health.status()}\n\nYou defeat the Monster and collect its head.\nYou should return to the King.\nYou have lost {health_lost} health from the fight\n\n{cm.current_place()}")
     else:
         return (
             f"{health.status()}\n\nYou have lost to the monster.\n\n{cm.current_place()}")

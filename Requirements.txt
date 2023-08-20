@@ -1,13 +1,5 @@
-# INSTALLING A VIRTUAL ENVIRONMENT VENV
-$ python -m venv venv
-
-# ACTIVATING THE VIRTUAL ENVIRONMENT
-$ source venv/Scripts/activate
-
-
-# INSTALLING THE PySimpleGUI LIBRARY
-$ pip install PySimpleGUI
-
-
-# RUNNING THE GAME
-$ python SimpleGame.py
+###### Requirements with Version Specifiers ######
+mysql-connector-python==8.0.30
+pycodestyle==2.11.0
+PySimpleGUI==4.60.5
+tomli==2.0.1
