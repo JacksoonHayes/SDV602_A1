@@ -40,3 +40,14 @@ def valid_list(p_input_string):
             result.append(astring)  # If recognized, add to the result list.
 
     return result
+
+if __name__ == "__main__":
+    while True:
+        user_input = input("Enter your game commands (or 'exit' to quit): ")
+        if user_input.lower() == 'exit':
+            break
+        recognized_commands = valid_list(user_input)
+        if recognized_commands:
+            print(f"Recognized commands: {recognized_commands}")
+        else:
+            print("No valid commands recognized. Try again.")
