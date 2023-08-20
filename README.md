@@ -1,13 +1,13 @@
-# INSTALLING A VIRTUAL ENVIRONMENT VENV
+# Installing the virtual environment venv
 $ python -m venv venv
 
-# ACTIVATING THE VIRTUAL ENVIRONMENT
+# Activiating the virtual environment
 $ source venv/Scripts/activate
 
 
-# INSTALLING THE PySimpleGUI LIBRARY
+# Installing the PySimpleGUI Library
 $ pip install PySimpleGUI
 
 
-# RUNNING THE GAME
+# Running the game
 $ python SimpleGame.py
