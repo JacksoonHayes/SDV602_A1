@@ -118,10 +118,10 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                         'Image': 'cave.png',
                         'Potion': (use_potion, 'Cave')
                         },
-               'InCave': {'Story': 'The cave is barren and dimly lit, but it may be worth searching.\nSearch the cave?\n\nDo you wish to leave?',
+               'InCave': {'Story': 'The cave is barren and dimly lit,\nbut it may be worth searching.\nSearch the cave?\n\nDo you wish to leave?',
                           'Leave': (move, 'Cave'),
                           'Search': (search_cave, 'InCave'),
-                          'Image': 'dead.png',
+                          'Image': 'inCave.png',
                           'Potion': (use_potion, 'InCave')
                           },
                'Forest': {'Story': "You are greeted by a travelling Knight heading west\nTalk to the Knight?\n\nYou are in a Forest\n\nTo the West is a Town.",
@@ -134,7 +134,7 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                           'West': (move, 'Town'),
                           'Leave': (move, 'Town'),
                           'Fight': (fight.duel, 'Knight'),
-                          'Image': 'dead.png',
+                          'Image': 'knight.png',
                           'Potion': (use_potion, 'Knight')
                           },
                'Castle': {'Story': 'You are at the Castle.\n\nTo the North is a Town.\n\nDo you wish to enter the Castle?',
@@ -187,7 +187,7 @@ def game_play(user_input):
         story_result = ''
         valid_tokens = token.valid_list(user_input)
         if not valid_tokens:
-            story_result = f"{health.status()}\n\nPLEASE ENTER A VALID COMMAND\n\n{current_place()}"
+            story_result = f"{health.status()}\n\nPlease enter a valid command.\n\n{current_place()}"
         else:
             for atoken in valid_tokens:
                 game_place = game_places[game_state]
