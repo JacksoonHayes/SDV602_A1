@@ -26,6 +26,16 @@ def use_potion(game_place):
             f"{health.status()}\n\nYou used a potion to increase your health by 50\n\n{current_place()}")
     return (f"{health.status()}\n\nYou have no potions to use\n\n{current_place()}")
 
+def cave_story(game_place):
+    global game_state
+    
+    # Decrease player health by 5 with each move
+    health.decrease_health(5)
+    game_state = game_place[1]  # Set the new game state based on the move
+    game_places['Cave']['Story'] = 'You are at the Cave.\n\nTo the South is a Town.\n\nDo you wish to enter the Cave?'
+    # Return the current status of the player
+    return current_status()
+
 # Function to handle player's action when trying to enter a cave
 def enter_cave(game_place):
     result = ''
@@ -81,6 +91,8 @@ def enter_castle(game_place):
 def talk_to_king(game_place):
     # If the player has defeated the monster, the king rewards them
     if inventory.has_item('Monster Head'):
+        inventory.remove_item('Monster Head')
+        inventory.collect_item('Cloak')
         return f"{health.status()}\n\nThe King thanks you for defeating the monster.\nYou receive a cloak for your efforts.\n\n{current_place()}"
     else:
         # If the player already has a shield or potion, the king won't talk
@@ -90,7 +102,7 @@ def talk_to_king(game_place):
             # Otherwise, the king gives the player a quest and rewards them with a shield and potion
             inventory.collect_item('Shield')
             inventory.collect_item('Potion')
-            return f"{health.status()}\n\nThe King speaks of a bounty at the nearby lake.\nYou receive a shield and potion.\n\n{current_place()}"
+            return f"{health.status()}\n\nThe King speaks of a bounty at the nearby lake.\nYou receive a shield and 1 health potion.\n\n{current_place()}"
 
 # Function to manage the fight at the lake
 def lake_fight(game_place):
@@ -99,27 +111,27 @@ def lake_fight(game_place):
         return fight.monster_fight(game_place)
     else:
         # Notify player they need more equipment to challenge the monster
-        return f"{health.status()}\n\nThe monster is too strong.\nReturn when you have a sword and shield.\n\n{current_place()}"
+        return f"{health.status()}\n\nThe monster is too strong.\nReturn when you have a sword and shield.\n\nYou are at the Lake.\n\nTo the East is a Town."
 
 
 # Define the game places and their properties including what the player can do at each place
 game_state = 'Cave'
 game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\nTo the South is a Castle.\nTo the East is a Forest\nTo the West is a Lake.',
-                        'North': (move, 'Cave'),
+                        'North': (cave_story, 'Cave'),
                         'East': (is_knight_there, 'Forest'),
                         'South': (move, 'Castle'),
                         'West': (move, 'Lake'),
                         'Image': 'town.png',
                         'Potion': (use_potion, 'Town')
                         },
-               'Cave': {'Story': 'You are at a Cave.\n\nTo the South is a Town.\n\nDo you wish to enter the Cave?',
+               'Cave': {'Story': 'You start your adventure on the way to explore a Cave.\n\nTo the South is a Town.\n\nDo you wish to enter the Cave?',
                         'South': (move, 'Town'),
                         'Enter': (enter_cave, 'InCave'),
                         'Image': 'cave.png',
                         'Potion': (use_potion, 'Cave')
                         },
-               'InCave': {'Story': 'The cave is barren and dimly lit,\nbut it may be worth searching.\nSearch the cave?\n\nDo you wish to leave?',
-                          'Leave': (move, 'Cave'),
+               'InCave': {'Story': 'The cave is barren and dimly lit,\nbut it may be worth searching.\n\nSearch the cave?\n\nDo you wish to leave?',
+                          'Leave': (cave_story, 'Cave'),
                           'Search': (search_cave, 'InCave'),
                           'Image': 'inCave.png',
                           'Potion': (use_potion, 'InCave')
@@ -149,7 +161,7 @@ game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\
                             'Image': 'castle.png',
                             'Potion': (use_potion, 'InCastle')
                             },
-               'Lake': {'Story': 'You arrive at the Lake.\n\nA strong monster lurks near the waters edge.\nFight the monster?\n\nTo the East is a Town.',
+               'Lake': {'Story': 'A strong monster lurks near the waters edge.\nFight the monster?\n\nYou arrive at the Lake.\n\nTo the East is a Town.',
                         'East': (move, 'Town'),
                         'Fight': (lake_fight, 'Lake'),
                         'Image': 'lake.png',

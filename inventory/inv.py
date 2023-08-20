@@ -5,7 +5,7 @@ def display_inventory(inventory):
     # If the inventory is empty, inform the player.
     if inventory == set([]):
         return "You have no items in your inventory."
-    # Return a ordered string of items, using enumeration for indexing.
+    # Return a ordered string of items, using enumeration for indexing of items.
     return "\n".join(f"{i + 1}. {item}" for i, item in enumerate(inventory))
 
 def remove_item(item):

@@ -17,17 +17,18 @@ def restart_game():
     """
     Resets the game to its original state.
     """
-    global game_state
     # Reset player health to 100
     health.player_health = 100
     # Clear the inventory excluding the torch
     inventory.clear_inventory()
     # Reset the game state to the starting point
-    game_state = 'Cave'
+    cm.game_state = game_state = 'Cave'
+    
 
     # Restore the original story to game places
     for place in cm.game_places:
         cm.game_places[place]['Story'] = original_story[place]['Story']
+    
 
 
 def make_a_window():
