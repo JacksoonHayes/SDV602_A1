@@ -4,7 +4,7 @@ from the input. It ensures that player inputs are recognized and translated
 into appropriate game commands.
 """
 
-# Define a list of recognized command tokens.
+# Defines a list of recognized user inputs.
 _vocab_tokens = [
     'north',
     'south',
