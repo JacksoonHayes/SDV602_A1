@@ -93,7 +93,7 @@ def talk_to_king(game_place):
     if inventory.has_item('Monster Head'):
         inventory.remove_item('Monster Head')
         inventory.collect_item('Cloak')
-        return f"{health.status()}\n\nThe King thanks you for defeating the monster.\nYou receive a cloak for your efforts.\n\n{current_place()}"
+        return f"{health.status()}\n\nThe King thanks you for defeating the monster.\nYou receive a cloak for your efforts.\n\nYou have completed your adventure!"
     else:
         # If the player already has a shield or potion, the king won't talk
         if inventory.has_item('Shield') or inventory.has_item('Potion'):
