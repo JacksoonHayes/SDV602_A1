@@ -1,18 +1,13 @@
-# SDV602_A1
-Repository for SDV602 Game Starter and development for assessment 1.
-
-# INSTALLING A VIRTUAL ENVIRONMENT VENV
-
+# Installing the virtual environment venv
 $ python -m venv venv
 
+# Activiating the virtual environment
 $ source venv/Scripts/activate
 
 
-# USING PIP to install a module
-
+# Installing the PySimpleGUI Library
 $ pip install PySimpleGUI
 
 
-# RUNNING THE GAME
-
+# Running the game
 $ python SimpleGame.py

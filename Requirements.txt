@@ -1,0 +1,5 @@
+###### Requirements with Version Specifiers ######
+mysql-connector-python==8.0.30
+pycodestyle==2.11.0
+PySimpleGUI==4.60.5
+tomli==2.0.1
