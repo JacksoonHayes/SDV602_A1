@@ -1,5 +1,5 @@
 # A set to hold items in the player's inventory. Sets ensure unique items
-# (no duplicates) and returns unordered.
+# (no duplicates) and returns an unordered list.
 player_inventory = set(['Torch'])
 
 

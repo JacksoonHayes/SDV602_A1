@@ -5,8 +5,15 @@ import cmd_parser.token as token
 import monster.fight as fight
 
 
-# Function to move the player between different locations in the game
 def move(game_place):
+    """Move the player between different locations.
+
+    Args:
+        game_place (tuple): Contains the function to move and the new location.
+
+    Returns:
+        str: Current status of the player after the move.
+    """
     global game_state
 
     # Decrease player health by 5 with each move
@@ -17,8 +24,15 @@ def move(game_place):
     return current_status()
 
 
-# Function to allow the player to use a health potion
 def use_potion(game_place):
+    """Allow player to use a health potion.
+
+    Args:
+        game_place (tuple): Current game location and story.
+
+    Returns:
+        str: Player status and narrative after using a potion.
+    """
     # Check if the player has a potion in their inventory
     if 'Potion' in inventory.player_inventory:
         # Use the potion and increase player's health by 50
@@ -31,18 +45,32 @@ def use_potion(game_place):
 
 # Function to change the story from the inital game start story.
 def cave_story(game_place):
+    """Narrative for entering a cave.
+
+    Args:
+        game_place (tuple): Contains the function to proceed and the associated location.
+
+    Returns:
+        str: Updated player status.
+    """
     global game_state
 
     # Decrease player health by 5 with each move
     health.decrease_health(5)
     game_state = game_place[1]  # Set the new game state based on the move
     game_places['Cave']['Story'] = 'You are at the Cave.\n\nTo the South is a Town.\n\nDo you wish to enter the Cave?'
-    # Return the current status of the player
     return current_status()
 
 
-# Function to handle player's action when trying to enter a cave
 def enter_cave(game_place):
+    """Enter a cave if conditions are met.
+
+    Args:
+        game_place (tuple): Expected cave location and narrative.
+
+    Returns:
+        str: Resulting narrative after attempting to enter the cave.
+    """
     result = ''
     # Player can enter the cave only if they have a torch
     if inventory.has_item('Torch'):
@@ -129,6 +157,9 @@ def lake_fight(game_place):
 
 # Define the game places and their properties including what the player
 # can do at each place
+# Makes use of dictionaries and tuples to store the game places.
+# Dictionary keys and values are mutable, whilst the tuple values are
+# immutable.
 game_state = 'Cave'
 game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\nTo the South is a Castle.\nTo the East is a Forest\nTo the West is a Lake.',
                         'North': (cave_story, 'Cave'),
@@ -197,20 +228,24 @@ def current_place():
 # Same function as current_place() but with the players health and
 # inventory status added.
 def current_status():
+    """Provide the player's health status along with the current location's story.
+
+    Returns:
+        str: Player's health and location story.
+    """
 
     return f"{health.status()}\n\n{current_place()}"
 
 
 # Main game function that takes user input and processes game mechanics
 def game_play(user_input):
-    """
-    Runs the game_play
+    """Main game loop that takes user input and processes game mechanics.
 
     Args:
-        direction string: _North or South or East or West
+        user_input (str): Direction or action input from the user.
 
     Returns:
-        string: the story at the current place
+        str: Narrative or result of the player's action.
     """
 
     while health.player_health > 0:
