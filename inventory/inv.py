@@ -1,34 +1,90 @@
-# A set to hold items in the player's inventory. Sets ensure unique items (no duplicates) and returns unordered.
+# A set to hold items in the player's inventory. Sets ensure unique items
+# (no duplicates) and returns unordered.
 player_inventory = set(['Torch'])
 
+
 def display_inventory(inventory):
+    """
+    Displays the player's inventory.
+
+    Args:
+    - inventory (set): The inventory set containing items.
+
+    Returns:
+    - str: A representation of the items in the inventory.
+    """
     # If the inventory is empty, inform the player.
-    if inventory == set([]):
+    if not inventory:
         return "You have no items in your inventory."
-    # Return a ordered string of items, using enumeration for indexing of items.
+    # Return an ordered string of items, using enumeration for indexing of
+    # items.
     return "\n".join(f"{i + 1}. {item}" for i, item in enumerate(inventory))
 
+
 def remove_item(item):
-    # Removes the specified item from the player's inventory.
+    """
+    Removes a specified item from the player's inventory.
+
+    Args:
+    - item (str): The item to be removed.
+    """
     player_inventory.remove(item)
 
+
 def collect_item(item):
-    # Adds the specified item to the player's inventory.
+    """
+    Adds a specified item to the player's inventory.
+
+    Args:
+    - item (str): The item to be added.
+    """
     player_inventory.add(item)
 
+
 def inv_count():
-    # Shows the current number of items and the maximum capacity.
-    return (f"Inventory: {len(player_inventory)} / 7")
+    """
+    Gets the current count of items in the player's inventory.
+
+    Returns:
+    - str: A string showing the number of items and the maximum capacity.
+    """
+    return f"Inventory: {len(player_inventory)} / 7"
+
 
 def show_inventory():
-    # Displays all items in the player's inventory.
-    return (f"Inventory: \n\n{display_inventory(player_inventory)}")
+    """
+    Displays all items in the player's inventory.
+
+    Returns:
+    - str: A representation of the items in the inventory.
+    """
+    return f"Inventory: \n\n{display_inventory(player_inventory)}"
+
 
 def has_item(item):
-    # Checks if a specified item is present in the player's inventory.
+    """
+    Checks if a specified item is present in the player's inventory.
+
+    Args:
+    - item (str): The item to check.
+
+    Returns:
+    - bool: True if item is in inventory, else False.
+    """
     return item in player_inventory
 
+
 def clear_inventory():
-    # Clears all items from the player's inventory and re-adds the 'Torch' for story purposes.
+    """
+    Clears all items from the player's inventory, and then adds back the 'Torch'.
+    """
     player_inventory.clear()
     player_inventory.add('Torch')
+
+
+if __name__ == '__main__':
+    print(show_inventory())
+    collect_item('Sword')
+    print(show_inventory())
+    remove_item('Sword')
+    print(show_inventory())

@@ -1,6 +1,6 @@
 """
-This module processes input strings for a game, extracting valid command tokens 
-from the input. It ensures that player inputs are recognized and translated 
+This module processes input strings for a game, extracting valid command tokens
+from the input. It ensures that player inputs are recognized and translated
 into appropriate game commands.
 """
 
@@ -18,9 +18,10 @@ _vocab_tokens = [
     'talk'
 ]
 
+
 def valid_list(p_input_string):
     """
-    Processes an input string and extracts valid command tokens from it. 
+    Processes an input string and extracts valid command tokens from it.
     It splits the string by whitespace and checks if each word is a recognized command.
 
     Args:
@@ -29,10 +30,10 @@ def valid_list(p_input_string):
     Returns:
         list: A list of recognized command tokens in the order they appeared in the input string.
     """
-    
+
     # Initialize an empty list to hold valid tokens.
     result = []
-    
+
     # Split the input string by whitespace and iterate over each word.
     for astring in p_input_string.split():
         # Convert the word to lowercase and check if it's a recognized command.
@@ -40,6 +41,7 @@ def valid_list(p_input_string):
             result.append(astring)  # If recognized, add to the result list.
 
     return result
+
 
 if __name__ == "__main__":
     while True:
