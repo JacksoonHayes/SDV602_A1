@@ -1,7 +1,12 @@
 """
+Token module.
+
 This module processes input strings for a game, extracting valid command tokens
 from the input. It ensures that player inputs are recognized and translated
 into appropriate game commands.
+
+Functions:
+- valid_list: Processes an input string and extracts valid command tokens from it.
 """
 
 # Defines a list of recognized user inputs.

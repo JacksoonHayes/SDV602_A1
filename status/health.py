@@ -1,3 +1,15 @@
+"""
+Status/Health Module.
+
+This module provides functions for managing or displaying the player's health.
+
+Functions:
+- status: Provides a string representation of the player's health and inventory count.
+- show_health: Displays the current health of the player.
+- increase_health: Increases the player's health by a specified amount.
+- decrease_health: Decreases the player's health by a specified amount.
+"""
+
 import inventory.inv as inventory
 
 # Set player's health to 100.

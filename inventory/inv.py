@@ -1,3 +1,20 @@
+"""
+Inventory module.
+
+This module provides functionality for managing and manipulating the player's inventory
+in the game. This includes adding, removing, displaying items within the inventory.
+
+Functions:
+- display_inventory: Displays the player's inventory.
+- remove_item: Removes a specified item from the player's inventory.
+- collect_item: Adds a specified item to the player's inventory.
+- inv_count: Gets the current count of items in the player's inventory.
+- show_inventory: Displays all items in the player's inventory.
+- has_item: Checks if a specified item is present in the player's inventory.
+- clear_inventory: Clears all items from the player's inventory, and then adds back the 'Torch'.
+"""
+
+
 # A set to hold items in the player's inventory. Sets ensure unique items
 # (no duplicates) and returns an unordered list.
 player_inventory = set(['Torch'])

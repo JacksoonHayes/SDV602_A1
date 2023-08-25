@@ -1,3 +1,19 @@
+"""
+Fighting module.
+
+This module handles the fighting system for the game. There are two kinds of
+fights: a somewhat friendly duel against a knight, and a more intense fight against a
+monster. The differnce between the two is that the player can die in the latter.
+
+Functions:
+- duel: A friendly combat system against a knight, where no one dies. 
+  Players can obtain a key upon defeating the knight.
+- monster_fight: A more intense combat system against monsters, where either 
+  the player or the monster will perish. Players can obtain the monster's head 
+  upon victory, which may be of importance in game progression.
+"""
+
+
 import random
 
 import inventory.inv as inventory

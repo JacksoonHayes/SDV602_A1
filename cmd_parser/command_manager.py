@@ -1,3 +1,12 @@
+"""
+Command parser/mananger module.
+
+This module handles the games mechanics which involves navigating through different
+locations and interacting with the environment with each location having its own
+story and actions affecting the player's health and inventory.
+"""
+
+
 # Import modules to confine with the assessment scope.
 import status.health as health
 import inventory.inv as inventory
@@ -155,11 +164,13 @@ def lake_fight(game_place):
         return f"{health.status()}\n\nThe monster is too strong.\nReturn when you have a sword and shield.\n\nYou are at the Lake.\n\nTo the East is a Town."
 
 
-# Define the game places and their properties including what the player
-# can do at each place
-# Makes use of dictionaries and tuples to store the game places.
-# Dictionary keys and values are mutable, whilst the tuple values are
-# immutable.
+"""
+Defines the game places and their properties including what the player
+can do at each place
+Makes use of dictionaries and tuples to store the game places.
+Dictionary keys and values are mutable.
+Tuples are immutable and useful for storing data that will not change.
+"""
 game_state = 'Cave'
 game_places = {'Town': {'Story': 'You are in a Town.\n\nTo the North is a Cave.\nTo the South is a Castle.\nTo the East is a Forest\nTo the West is a Lake.',
                         'North': (cave_story, 'Cave'),
