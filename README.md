@@ -15,10 +15,6 @@ The game functions from a list of text-based input commands the player can enter
   ```sh
   https://www.python.org/downloads/
   ```
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
 
 ## Installation
 
